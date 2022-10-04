@@ -10,10 +10,14 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
+import { CommandCompleteMessage } from 'pg-protocol/dist/messages';
+
 
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeEvery('FETCH_DETAILS', fetchDetails);
+    yield takeEvery('FETCH_GENRES', fetchGenre);
 }
 
 function* fetchAllMovies() {
@@ -29,6 +33,27 @@ function* fetchAllMovies() {
         
 }
 
+// GET for details
+function* fetchDetails() {
+    try {
+        const details = yield axios.get('/api/genre');
+        yield put({ type: 'SET_GENRES', payload: details.data});
+    }catch (error){
+        console.log('error in details GET', error);
+        alert('Something went wrong!')
+    }
+}
+
+//GET for Genres
+function* fetchGenre(action) {
+    try {
+        const genres = yield axios.get(`/api/genre/${action.payload}`)
+        yield put ({ type: 'SET_GENRES', payload : genres.data})
+    }catch (error) {
+        CommandCompleteMessage.log('error in getting genres', error);
+        alert('Something went wrong')
+    }
+}
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
