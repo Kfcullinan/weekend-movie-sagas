@@ -50,12 +50,22 @@ function* fetchGenre(action) {
         const genres = yield axios.get(`/api/genre/${action.payload}`)
         yield put ({ type: 'SET_GENRES', payload : genres.data})
     }catch (error) {
-        CommandCompleteMessage.log('error in getting genres', error);
+        Console.log('error in getting genres', error);
         alert('Something went wrong')
     }
 }
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
+
+// store selected movie
+const selectedMovie = (state = {}, action) => {
+    switch (action.type) {
+        case 'SELECT_MOVIE':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
@@ -82,6 +92,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        selectedMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
