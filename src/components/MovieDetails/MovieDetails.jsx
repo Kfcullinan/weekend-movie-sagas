@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-function MovieDetail() {
+function MovieDetails() {
     const movie = useSelector(store => store.selectedMovie);
     return(
         <div>
