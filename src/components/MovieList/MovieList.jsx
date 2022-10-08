@@ -10,7 +10,10 @@ function MovieList() {
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
+    const displayMovie = (movieToDisplay) => {
+        dispatch({type: 'SELECT_MOVIE', payload: movieToDisplay})
 
+    }
     return (
         <main>
             <h1>MovieList</h1>
@@ -19,7 +22,7 @@ function MovieList() {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title}/>
+                            <img onClick={(event) => displayMovie(movie)}rc={movie.poster} alt={movie.title}/>
                         </div>
                     );
                 })}
