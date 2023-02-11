@@ -12,8 +12,12 @@ function MovieList() {
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
-    const displayMovie = (movieToDisplay) => {
-        history.push(`/details/${movieToDisplay.id}`);
+
+    const displayMovie = (movieToDisplay) => { 
+        console.log(movieToDisplay);
+        //using dispatch to send movie data to redux and sagas
+        dispatch({ type: 'SET_MOVIE_DETAILS', payload: movieToDisplay })
+        //history.push(`/details/${movie.id}`);
     }
     return (
         <main>
