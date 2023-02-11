@@ -36,8 +36,10 @@ function* fetchAllMovies() {
 // GET for details
 function* fetchDetails() {
     try {
-        const details = yield axios.get('/api/genre');
-        yield put({ type: 'SET_GENRES', payload: details.data});
+        const details = yield axios.get('/api/details/${action.payload}');
+        yield put({ type: 'SELECT_MOVIE', payload: details.data});
+        const genres = yield axios.get(`/api/genres/${action.payload}`)
+        yield put({ type:'SET_GENRES', payload: genre.data })
     }catch (error){
         console.log('error in details GET', error);
         alert('Something went wrong!')

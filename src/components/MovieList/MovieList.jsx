@@ -13,8 +13,7 @@ function MovieList() {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
     const displayMovie = (movieToDisplay) => {
-        dispatch({type: 'SELECT_MOVIE', payload: movieToDisplay})
-        history.push('/details');
+        history.push(`/details/${movieToDisplay.id}`);
     }
     return (
         <main>
