@@ -62,7 +62,7 @@ const sagaMiddleware = createSagaMiddleware();
 // store selected movie
 const selectedMovie = (state = {}, action) => {
     switch (action.type) {
-        case 'SELECT_MOVIE':
+        case 'SET_MOVIE_DETAILS':
             return action.payload;
         default:
             return state;
@@ -102,6 +102,7 @@ const storeInstance = createStore(
 
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
+
 
 ReactDOM.render(
     <React.StrictMode>
